@@ -12,14 +12,16 @@ urllib.request.install_opener(opener)
 
 
 def getFile(url,publisher_name,product_name):
-   
+
+    
+    publisher_name = publisher_name.replace(' ','_')
     url = str(url)
     url = url.rstrip() 
     url = url.lstrip()
     if(url == ""):
         print("Empty stamp image for "+product_name)
         return(False,'junk')
-  
+    
   
     if(url.startswith('/dotcom/')):
         url = 'https://learning.tcsionhub.in'+url.replace('/','//')
@@ -74,18 +76,30 @@ def getFile(url,publisher_name,product_name):
         return(False,'junk')
        
 def readexcel():
-    # Give the location of the file
+    #Required for ignoring warning messages
     with warnings.catch_warnings(record=True):
         warnings.simplefilter("always")
+        #path of the input file
         path = "input.xlsx"
+        
+        #Loading excel sheet as dataframe object
         df_out = pd.read_excel(path)
-        df = df_out.dropna()
-        df = df.head(200)
-        print(df.head())
+        
+        #Selecting concerned columns in dataframe
+        df = df_out[['Product Name','Thumbnail Image Path','Publisher Name','Product Status']].dropna()
+        
+        #selecting products with Status Active
+        df = df.loc[df['Product Status'] == 'Active']
+        df = df.head(200)  #selecting only top 200 for testing purpose
+
+        #for each product extracting values
         for url, publisher_name,product_name in zip(df['Thumbnail Image Path'], df['Publisher Name'],df['Product Name']):
+            #current product which is send for processing
             print(url, publisher_name,product_name)
-            x = getFile(url, publisher_name,product_name) 
-            if(x[0] == True):
-                df_out.loc[ df_out['Product Name']==product_name, ['Thumbnail Image Path']] = '/per/g01/pub/1016/iDH/instance/4/template/83/temp/template/'+x[1]
-    df_out.to_excel("output.xlsx")
+
+            #Function call for saving file in respective publisher's folder and getting new URL path
+            flag_path = getFile(url, publisher_name,product_name) 
+            if(flag_path[0] == True):
+                df_out.loc[ df_out['Product Name']==product_name, ['Thumbnail Image Path']] = '/per/g01/pub/1016/iDH/instance/4/template/83/temp/template/'+flag_path[1]
+    df_out.to_excel("output.xlsx", index=False)
 readexcel()
