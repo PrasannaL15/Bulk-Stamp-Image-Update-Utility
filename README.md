@@ -87,6 +87,5 @@ In this example:
 **Release Date** might be an additional column, depending on your dataset.
 Ensure that your input data aligns with these guidelines to facilitate seamless processing by the Bulk Stamp Image Update Utility.
 
-Please refer to input.xlsx file
 
 Feel free to reach out for any further clarification or assistance!
