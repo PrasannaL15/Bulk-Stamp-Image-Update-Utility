@@ -75,3 +75,16 @@ For a more concrete understanding, consider the following example:
 |-----------------|--------------|--------------------------------------------|--------------|
 | Publisher_1     | Product_1    | https://example.com/stamp_images/image_1.jpg | 2022-01-01   |
 | Publisher_2     | Product_2    | https://example.com/stamp_images/image_2.jpg | 2022-02-15   |
+
+
+```
+
+In this example:
+
+**Publisher Name** represents the name of the publisher associated with each product.
+**Product Name** identifies the specific product requiring a stamp image update.
+**Image URL** contains the URL of the new stamp image to be associated with the product.
+**Release Date** might be an additional column, depending on your dataset.
+Ensure that your input data aligns with these guidelines to facilitate seamless processing by the Bulk Stamp Image Update Utility.
+
+Feel free to reach out for any further clarification or assistance!
